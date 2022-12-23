@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GraphMatrix.h"
 #include "HeldKarp.h"
+#include "SimulatedAnnealing.h"
 #include <algorithm>
 #include <cstdlib>
 #include <time.h>
@@ -111,17 +112,19 @@ void GraphMatrix::testbench(int alg, std::string header, int n, int o, std::stri
 
 	file << header << "\n";
 	for (int i = 0; i < n; i++) {
-		HeldKarp *temp = new HeldKarp();
+		//HeldKarp *temp = new HeldKarp();
+		SimulatedAnnealing *temp = new SimulatedAnnealing(adjMatrix,v);
 		StartCounter();
-		temp->Algorithm(adjMatrix,v);
+		temp->Algorithm();
 		count += GetCounter();
 		//avg += count;
 		//if (i == n - 1)
 		//	file << count << ";\nAVG: " << avg / n << ";\n";
 		//else
-		file << count << ";\n";
+		//file << count << ";\n";
 		count = 0;
 	}
+
 
 	file.close();
 }

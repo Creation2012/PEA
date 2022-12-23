@@ -90,6 +90,25 @@ rule CXX_STATIC_LIBRARY_LINKER__BranchAndBound_Debug
 #############################################
 # Rule for compiling CXX files.
 
+rule CXX_COMPILER__SimulatedAnnealing_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = D:\tools\msys2\mingw64\bin\g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX static library.
+
+rule CXX_STATIC_LIBRARY_LINKER__SimulatedAnnealing_Debug
+  command = cmd.exe /C "$PRE_LINK && D:\tools\msys2\mingw64\bin\cmake.exe -E rm -f $TARGET_FILE && D:\tools\msys2\mingw64\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && D:\tools\msys2\mingw64\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking CXX static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
 rule CXX_COMPILER__main_Debug
   depfile = $DEP_FILE
   deps = gcc

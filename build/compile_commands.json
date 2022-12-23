@@ -21,6 +21,11 @@
 },
 {
   "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\SimulatedAnnealing.dir\\SimulatedAnnealing.cpp.obj -c \"E:\\pwr\\[P] PEA\\SimulatedAnnealing.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\SimulatedAnnealing.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
   "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\main.dir\\main.cpp.obj -c \"E:\\pwr\\[P] PEA\\main.cpp\"",
   "file": "E:\\pwr\\[P] PEA\\main.cpp"
 }

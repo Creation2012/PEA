@@ -46,7 +46,7 @@ void configInit(GraphMatrix* gm) {
 				break;
 			}
 			else {
-				printf("CURRENT FILE: %s", fileName);
+				printf("CURRENT FILE: %s\n", fileName);
 			}
 
 			gm->testbench(1, fileName + " " + to_string(loops) + " " + to_string(optimal) + path + ";", loops, optimal, outputName);

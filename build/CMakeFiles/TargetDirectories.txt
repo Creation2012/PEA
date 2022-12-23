@@ -30,6 +30,7 @@ E:/pwr/[P] PEA/build/CMakeFiles/GraphMatrix.dir
 E:/pwr/[P] PEA/build/CMakeFiles/BruteForce.dir
 E:/pwr/[P] PEA/build/CMakeFiles/HeldKarp.dir
 E:/pwr/[P] PEA/build/CMakeFiles/BranchAndBound.dir
+E:/pwr/[P] PEA/build/CMakeFiles/SimulatedAnnealing.dir
 E:/pwr/[P] PEA/build/CMakeFiles/main.dir
 E:/pwr/[P] PEA/build/CMakeFiles/package.dir
 E:/pwr/[P] PEA/build/CMakeFiles/package_source.dir
