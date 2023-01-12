@@ -333,13 +333,44 @@ build libBranchAndBound.a: CXX_STATIC_LIBRARY_LINKER__BranchAndBound_Debug CMake
   TARGET_PDB = BranchAndBound.a.dbg
 
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target SimulatedAnnealing
+
+
+#############################################
+# Order-only phony target for SimulatedAnnealing
+
+build cmake_object_order_depends_target_SimulatedAnnealing: phony || CMakeFiles/SimulatedAnnealing.dir
+
+build CMakeFiles/SimulatedAnnealing.dir/SimulatedAnnealing.cpp.obj: CXX_COMPILER__SimulatedAnnealing_Debug E$:/pwr/[P]$ PEA/SimulatedAnnealing.cpp || cmake_object_order_depends_target_SimulatedAnnealing
+  DEP_FILE = CMakeFiles\SimulatedAnnealing.dir\SimulatedAnnealing.cpp.obj.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles\SimulatedAnnealing.dir
+  OBJECT_FILE_DIR = CMakeFiles\SimulatedAnnealing.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target SimulatedAnnealing
+
+
+#############################################
+# Link the static library libSimulatedAnnealing.a
+
+build libSimulatedAnnealing.a: CXX_STATIC_LIBRARY_LINKER__SimulatedAnnealing_Debug CMakeFiles/SimulatedAnnealing.dir/SimulatedAnnealing.cpp.obj
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles\SimulatedAnnealing.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libSimulatedAnnealing.a
+  TARGET_PDB = SimulatedAnnealing.a.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target main
 
 
 #############################################
 # Order-only phony target for main
 
-build cmake_object_order_depends_target_main: phony || cmake_object_order_depends_target_BranchAndBound cmake_object_order_depends_target_GraphMatrix cmake_object_order_depends_target_HeldKarp
+build cmake_object_order_depends_target_main: phony || cmake_object_order_depends_target_BranchAndBound cmake_object_order_depends_target_GraphMatrix cmake_object_order_depends_target_HeldKarp cmake_object_order_depends_target_SimulatedAnnealing
 
 build CMakeFiles/main.dir/main.cpp.obj: CXX_COMPILER__main_Debug E$:/pwr/[P]$ PEA/main.cpp || cmake_object_order_depends_target_main
   DEP_FILE = CMakeFiles\main.dir\main.cpp.obj.d
@@ -355,9 +386,9 @@ build CMakeFiles/main.dir/main.cpp.obj: CXX_COMPILER__main_Debug E$:/pwr/[P]$ PE
 #############################################
 # Link the executable main.exe
 
-build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.cpp.obj | libGraphMatrix.a libHeldKarp.a libBranchAndBound.a || libBranchAndBound.a libGraphMatrix.a libHeldKarp.a
+build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.cpp.obj | libGraphMatrix.a libHeldKarp.a libBranchAndBound.a libSimulatedAnnealing.a || libBranchAndBound.a libGraphMatrix.a libHeldKarp.a libSimulatedAnnealing.a
   FLAGS = -g
-  LINK_LIBRARIES = libGraphMatrix.a  libHeldKarp.a  libBranchAndBound.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = libGraphMatrix.a  libHeldKarp.a  libBranchAndBound.a  libSimulatedAnnealing.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\main.dir
   POST_BUILD = cd .
   PRE_LINK = cmd.exe /C "cd /D "E:\pwr\[P] PEA\build" && D:\tools\msys2\mingw64\bin\cmake.exe -E copy_directory "E:/pwr/[P] PEA/data/" "E:/pwr/[P] PEA/build" && cd "E:\pwr\[P] PEA\build""
@@ -660,6 +691,8 @@ build GraphMatrix: phony libGraphMatrix.a
 
 build HeldKarp: phony libHeldKarp.a
 
+build SimulatedAnnealing: phony libSimulatedAnnealing.a
+
 build main: phony main.exe
 
 # =============================================================================
@@ -670,7 +703,7 @@ build main: phony main.exe
 #############################################
 # Folder: E:/pwr/[P] PEA/build
 
-build all: phony libGraphMatrix.a libBruteForce.a libHeldKarp.a libBranchAndBound.a main.exe
+build all: phony libGraphMatrix.a libBruteForce.a libHeldKarp.a libBranchAndBound.a libSimulatedAnnealing.a main.exe
 
 # =============================================================================
 # Unknown Build Time Dependencies.

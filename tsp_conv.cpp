@@ -20,7 +20,7 @@
 
 using namespace std;
 
-#define     FILE_IN         "bays29.tsp"         // Nazwa pliku z danymi do przetworzenia
+#define     FILE_IN         "brazil58.tsp"         // Nazwa pliku z danymi do przetworzenia
 #define     FILE_OUT        "tsp_"              // Prefiks nazwy pliku z danymi przetworzonymi
                                                 // Do prefiksu dodawana jest liczba miast
 #define     HEADER_LINES    7

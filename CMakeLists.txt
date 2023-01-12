@@ -28,9 +28,15 @@ add_library(
     BranchAndBound.cpp
 )
 
+add_library(
+    SimulatedAnnealing 
+    SimulatedAnnealing.h
+    SimulatedAnnealing.cpp
+)
+
 add_executable(main main.cpp)
 
-target_link_libraries(main PRIVATE GraphMatrix HeldKarp BranchAndBound)
+target_link_libraries(main PRIVATE GraphMatrix HeldKarp BranchAndBound SimulatedAnnealing)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

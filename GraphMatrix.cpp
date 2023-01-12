@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GraphMatrix.h"
 #include "HeldKarp.h"
+#include "SimulatedAnnealing.h"
 #include <algorithm>
 #include <cstdlib>
 #include <time.h>
@@ -102,25 +103,29 @@ double GetCounter()
 	return double(li.QuadPart - CounterStart) / PCFreq;
 }
 
-void GraphMatrix::testbench(int alg, std::string header, int n, int o, std::string outputName) 
+void GraphMatrix::testbench(int alg, std::string header, int n, int path_method, double temperature, double temperature_final, double alpha, int epoch, int neighbourhood_type, int cooling_method, int o, std::string outputName) 
 {
 	std::ofstream file(outputName, std::ios::app);
 	double count = 0;
 	double avg = 0;
+	int path_cost;
 	int* path = new int[this->v];
 
 	file << header << "\n";
 	for (int i = 0; i < n; i++) {
-		HeldKarp *temp = new HeldKarp();
+		printf("Iteration: %d\n",i);
+		//HeldKarp *temp = new HeldKarp();
+		SimulatedAnnealing *solution= new SimulatedAnnealing(adjMatrix,v);
 		StartCounter();
-		temp->Algorithm(adjMatrix,v);
+		path_cost = solution->Algorithm(path_method,temperature,temperature_final,alpha,epoch,neighbourhood_type,cooling_method);
 		count += GetCounter();
 		//avg += count;
 		//if (i == n - 1)
 		//	file << count << ";\nAVG: " << avg / n << ";\n";
 		//else
-		file << count << ";\n";
+		file << count << ";" << path_cost << "\n";
 		count = 0;
+		delete solution;
 	}
 
 	file.close();
