@@ -137,7 +137,7 @@ int SimulatedAnnealing::cost_function(std::vector<int> path){
 
 int SimulatedAnnealing::Algorithm(int path_method, double temperature, double temperature_final, double alpha, int epoch, int neighbourhood_type, int cooling_method){
     std::vector<int> path;
-    int k = 1;
+    int k = 0;
     int differ;
 
     // Initial state
