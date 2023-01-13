@@ -114,15 +114,13 @@ void GraphMatrix::testbench(int alg, std::string header, int n, int path_method,
 	file << header << "\n";
 	for (int i = 0; i < n; i++) {
 		printf("Iteration: %d\n",i);
-		//HeldKarp *temp = new HeldKarp();
 		SimulatedAnnealing *solution= new SimulatedAnnealing(adjMatrix,v);
 		StartCounter();
 		path_cost = solution->Algorithm(path_method,temperature,temperature_final,alpha,epoch,neighbourhood_type,cooling_method);
 		count += GetCounter();
-		//avg += count;
-		//if (i == n - 1)
-		//	file << count << ";\nAVG: " << avg / n << ";\n";
-		//else
+		if(path_cost == 0)
+			break;
+
 		file << count << ";" << path_cost << "\n";
 		count = 0;
 		delete solution;

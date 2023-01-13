@@ -79,9 +79,14 @@ int SimulatedAnnealing::longest_edge(){
     return max_edge;
 }
 
+void SimulatedAnnealing::geometric_cooling(double *temperature, double alpha, int k)
+{
+    *temperature = pow(alpha,k) * *temperature;
+}
+
 void SimulatedAnnealing::boltzmann_cooling(double *temperature, double alpha, double b, int k)
 {
-    *temperature = *temperature/(alpha + b * log(k));
+    *temperature = (*temperature)/(alpha + 100*b * log10(double(k/10000)));
 }
 
 void SimulatedAnnealing::cauchy_cooling(double *temperature, double alpha, double b, int k)
@@ -89,16 +94,10 @@ void SimulatedAnnealing::cauchy_cooling(double *temperature, double alpha, doubl
     *temperature = *temperature/(alpha + b * k);
 }
 
-void SimulatedAnnealing::geometric_cooling(double *temperature, double alpha, int k)
-{
-    //*temperature = ((alpha^k) * (*temperature));
-    *temperature = pow(alpha,k) * *temperature;
-}
-
 // Boltzmann or Cauchy cooling
 void cities_insert(std::vector<int> *path, int i, int j)
 {
-    if(i == 0 || j == 0 || i == (*path).size() - 1 || j == (*path).size() - 1)
+    if(i == 0 || j == 0 || i == (*path).size() - 1 || j == (*path).size() - 1 || i == j)
         return;
     std::vector<int>::iterator it;
     it = (*path).begin();
@@ -110,7 +109,7 @@ void cities_insert(std::vector<int> *path, int i, int j)
 // dodac losowa zamiane dla wszystkich przeksztalcen
 void cities_swap(std::vector<int> *path, int i, int j)
 {
-    if(i == 0 || j == 0 || i == (*path).size() - 1 || j == (*path).size() - 1)
+    if(i == 0 || j == 0 || i == (*path).size() - 1 || j == (*path).size() - 1 || i == j)
         return;
     int temp = (*path)[i];
     (*path)[i] = (*path)[j];
@@ -119,6 +118,8 @@ void cities_swap(std::vector<int> *path, int i, int j)
 
 void cities_invert(std::vector<int> *path, int i, int j)
 {
+    if(i == 0 || j == 0 || i == (*path).size() - 1 || j == (*path).size() - 1 || i == j)
+        return;
     std::reverse((*path).begin()+i,(*path).begin()+j+1); 
 }
 
@@ -136,15 +137,18 @@ int SimulatedAnnealing::cost_function(std::vector<int> path){
 
 int SimulatedAnnealing::Algorithm(int path_method, double temperature, double temperature_final, double alpha, int epoch, int neighbourhood_type, int cooling_method){
     std::vector<int> path;
-    int k;
+    int k = 1;
     int differ;
 
     // Initial state
     if(path_method == 1) {
         path = gen_random_path();
     }
-    else {
+    else if(path_method == 2) {
         path = gen_greedy_path(); 
+    }
+    else {
+        return 0;
     }
 
     // Starting at 0 - and end at 0
@@ -157,11 +161,7 @@ int SimulatedAnnealing::Algorithm(int path_method, double temperature, double te
     min_cost = path_cost;
 
     // Boltzmann constant (before or after temp method?)
-    double b = 1;
-
-    if(cooling_method == 1){
-        k = 1 / temperature;
-    }
+    double b = 2;
 
     // Temperature method 
     if(temperature == 0){
@@ -169,7 +169,7 @@ int SimulatedAnnealing::Algorithm(int path_method, double temperature, double te
     } 
     else {
         // Only when temperature other than 0
-        temperature = temperature * (v^2);
+        temperature = temperature * (pow(v,2));
     }
 
     //cities_insert(&path,1,7);
@@ -185,14 +185,17 @@ int SimulatedAnnealing::Algorithm(int path_method, double temperature, double te
             int vi = (int)(dis(gen)*10000)%path.size();
             int vj = (int)(dis(gen)*10000)%path.size();
             
-            if(neighbourhood_type == 0){
+            if(neighbourhood_type == 1){
                 cities_swap(&path,vi,vj);
             }
-            else if(neighbourhood_type == 1) {
+            else if(neighbourhood_type == 2) {
                 cities_insert(&path,vi,vj);
             }
-            else if(neighbourhood_type == 2) {
+            else if(neighbourhood_type == 3) {
                 cities_invert(&path,vi,vj);
+            }
+            else {
+                return 0;
             }
 
             path_cost = cost_function(path);
@@ -216,17 +219,14 @@ int SimulatedAnnealing::Algorithm(int path_method, double temperature, double te
             }
         }
         // Select cooling method
-        if(cooling_method == 0){
+        if(cooling_method == 1){
             geometric_cooling(&temperature, alpha, b);
         }
-        else if(cooling_method == 1){
+        else if(cooling_method == 2){
             boltzmann_cooling(&temperature, alpha, b, k);
         }
-        else if(cooling_method == 2){
+        else if(cooling_method == 3){
             cauchy_cooling(&temperature, alpha, b, k);
-        }
-        else {
-            return 0;
         }
     }
     return min_cost;
