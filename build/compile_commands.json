@@ -1,0 +1,37 @@
+[
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\GraphMatrix.dir\\GraphMatrix.cpp.obj -c \"E:\\pwr\\[P] PEA\\GraphMatrix.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\GraphMatrix.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\BruteForce.dir\\BruteForce.cpp.obj -c \"E:\\pwr\\[P] PEA\\BruteForce.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\BruteForce.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\HeldKarp.dir\\HeldKarp.cpp.obj -c \"E:\\pwr\\[P] PEA\\HeldKarp.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\HeldKarp.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\BranchAndBound.dir\\BranchAndBound.cpp.obj -c \"E:\\pwr\\[P] PEA\\BranchAndBound.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\BranchAndBound.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\SimulatedAnnealing.dir\\SimulatedAnnealing.cpp.obj -c \"E:\\pwr\\[P] PEA\\SimulatedAnnealing.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\SimulatedAnnealing.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\AntColony.dir\\AntColony.cpp.obj -c \"E:\\pwr\\[P] PEA\\AntColony.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\AntColony.cpp"
+},
+{
+  "directory": "E:/pwr/[P] PEA/build",
+  "command": "D:\\tools\\msys2\\mingw64\\bin\\g++.exe -g -o CMakeFiles\\main.dir\\main.cpp.obj -c \"E:\\pwr\\[P] PEA\\main.cpp\"",
+  "file": "E:\\pwr\\[P] PEA\\main.cpp"
+}
+]
