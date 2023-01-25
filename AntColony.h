@@ -4,14 +4,15 @@
 #include <algorithm>
 #include <math.h>
 #include <random>
+#include <stdlib.h>
+#include <time.h>
 
 class AntColony{
-    private:
-        std::vector<std::vector<int>> adjMatrix;
-        int v;
-
     public:
-        AntColony(std::vector<std::vector<int>> adjMatrix, int v);
+        std::vector<Ant> ants;
 
+        AntColony(std::vector<std::vector<int>> adjMatrix, const int numberOfCities);
         int Algorithm();
+        void init_pheromones();
+        void refresh_pheromones();
 };

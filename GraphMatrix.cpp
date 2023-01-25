@@ -2,6 +2,7 @@
 #include "GraphMatrix.h"
 #include "HeldKarp.h"
 #include "SimulatedAnnealing.h"
+#include "AntColony.h"
 #include <algorithm>
 #include <cstdlib>
 #include <time.h>
@@ -103,28 +104,34 @@ double GetCounter()
 	return double(li.QuadPart - CounterStart) / PCFreq;
 }
 
-void GraphMatrix::testbench(int alg, std::string header, int n, int path_method, double temperature, double temperature_final, double alpha, int epoch, int neighbourhood_type, int cooling_method, int o, std::string outputName) 
+void GraphMatrix::testbench(int algorithm_option, int repeat_test, int optimal_solution, std::string header, std::string output_name) 
 {
-	std::ofstream file(outputName, std::ios::app);
+	std::ofstream file(output_name, std::ios::app);
 	double count = 0;
 	double avg = 0;
 	int path_cost;
 	int* path = new int[this->v];
 
 	file << header << "\n";
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < repeat_test; i++) {
 		printf("Iteration: %d\n",i);
-		SimulatedAnnealing *solution= new SimulatedAnnealing(adjMatrix,v);
+
+		AntColony *solution= new AntColony(adjMatrix,v);
 		StartCounter();
-		path_cost = solution->Algorithm(path_method,temperature,temperature_final,alpha,epoch,neighbourhood_type,cooling_method);
+		path_cost = solution->Algorithm();
 		count += GetCounter();
-		if(path_cost == 0)
-			break;
+
+		if(path_cost == 0) {
+			std::cout << "Path error!";
+			return;
+		}
 
 		file << count << ";" << path_cost << "\n";
 		count = 0;
 		delete solution;
 	}
+
+	delete path;
 
 	file.close();
 }

@@ -9,14 +9,11 @@ constexpr auto config = "config.ini";
 
 void configInit(GraphMatrix* gm) {
 	printf("File processing...\n");
-	int loops, optimal;
-	double temperature, temperature_final, alpha;
-	int path_method, epoch, neighbourhood_type, cooling_method;
-
+	int repeat_test, optimal_solution;
 	string path;
 	ifstream file;
-	string fileName;
-	string outputName;
+	string file_name;
+	string output_name;
 	
 	file.open(config);
 	if (file.is_open()) {
@@ -32,34 +29,29 @@ void configInit(GraphMatrix* gm) {
 				file.seekg(i, ios_base::beg);
 			}
 		}
-		getline(file,outputName);
+		getline(file,output_name);
 		file.clear();
 		file.seekg(0);
 
 		ofstream ofs;
-		ofs.open(outputName, ofstream::out | ofstream::trunc); // czyszczenie wyniki.csv
+		ofs.open(output_name, ofstream::out | ofstream::trunc); // czyszczenie wyniki.csv
 		ofs.close();
 
-		while ((file >> fileName) && fileName.substr(fileName.find_last_of(".")) != ".csv") {
-			file >> loops;
-			file >> path_method;
-			file >> temperature;   
-			file >> temperature_final;
-			file >> alpha;
-			file >> epoch;
-			file >> neighbourhood_type;
-			file >> cooling_method;
-			file >> optimal;
+		while ((file >> file_name) && file_name.substr(file_name.find_last_of(".")) != ".csv") {
+			file >> repeat_test;
+			file >> optimal_solution;
 			//getline(file, path);
-			if(!(gm->readFromFile(fileName))){
-				printf("COULDN'T FIND FILE! WRONG FILE NAME? CURRENT FILE: %s", fileName);	
+			if(!(gm->readFromFile(file_name))){
+				printf("COULDN'T FIND FILE! WRONG FILE NAME? CURRENT FILE: %s", file_name);	
 				break;
 			}
 			else {
-				printf("CURRENT FILE: %s\n", fileName);
+				printf("CURRENT FILE: %s\n", file_name);
 			}
 
-			gm->testbench(1, fileName + " " + to_string(loops) + " " + to_string(optimal) + path + ";", loops, path_method, temperature, temperature_final, alpha, epoch, neighbourhood_type, cooling_method, optimal, outputName);
+			//gm->testbench(1, fileName + " " + to_string(loops) + " " + to_string(optimal) + path + ";", loops, path_method, temperature, temperature_final, alpha, epoch, neighbourhood_type, cooling_method, optimal, outputName);
+			
+			gm->testbench(1, repeat_test, optimal_solution, file_name, output_name);
 		}
 		file.close();
 	}
