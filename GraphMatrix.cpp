@@ -14,6 +14,27 @@
 #include <set>
 #include <cmath>
 
+class Node {
+	public:
+	int index;
+	int x;
+	int y;
+
+	public:
+	Node();
+	void setup_node(int index, int x, int y);
+	int getX();
+	int getY();
+};
+
+Node::Node() {
+	this->index = 0;
+	this->x = 0;
+	this->y = 0;
+}
+
+int length_between_nodes(Node a, Node b);
+
 GraphMatrix::GraphMatrix()
 {
 	this->v = 0;
@@ -43,18 +64,51 @@ bool GraphMatrix::readFromFile(std::string fileName)
 	int temp;
 	dataFile.open(fileName);
 	if (!dataFile.is_open())
+	{
+		printf("Problem with file - file is opened\n");
 		return false;
+	}
 
 	dataFile >> this->v;
-	this->adjMatrix.resize(this->v);
+	printf("current size: %i\n",this->v);
+	
 
-	for (int i = 0; i < this->v; i++) {
-		this->adjMatrix[i] = std::vector<int>(this->v);
-		for (int j = 0; j < this->v; j++) {
-			dataFile >> temp;
-			this->addEdge(i,j,temp);
+	// node version
+	//if(this->v == -1) {
+	//	std::vector<Node> nodes;
+	//	dataFile >> this->v;
+	//	this->adjMatrix.resize(this->v);
+	//	nodes.resize(this->v);
+	//	for(int i=0; i<this->v; i++) {
+	//		this->adjMatrix[i] = std::vector<int>(this->v);
+	//	}
+	//	int index;
+	//	int x;
+	//	int y;
+	//	for(int i=0; i<this->v; i++) {
+	//		dataFile >> index;
+	//		dataFile >> x;
+	//		dataFile >> y;
+	//		nodes[i].setup_node(index-1,x,y);
+	//	}
+
+	//	for(int i=0; i<this->v; i++) {
+	//		for(int j=0; j<this->v; j++) {
+	//			this->adjMatrix[i][j] = length_between_nodes(nodes[i], nodes[j]);
+	//		}
+	//	}
+	//}
+	//else {
+		this->adjMatrix.resize(this->v);
+
+		for (int i = 0; i < this->v; i++) {
+			this->adjMatrix[i] = std::vector<int>(this->v);
+			for (int j = 0; j < this->v; j++) {
+				dataFile >> temp;
+				this->addEdge(i,j,temp);
+			}
 		}
-	}
+	//}
 
 	dataFile.close();
 	return true;
@@ -104,7 +158,7 @@ double GetCounter()
 	return double(li.QuadPart - CounterStart) / PCFreq;
 }
 
-void GraphMatrix::testbench(int algorithm_option, int repeat_test, int optimal_solution, std::string header, std::string output_name) 
+void GraphMatrix::testbench(int repeat_test, int method, double alpha, double beta, int iterations, int optimal_solution, std::string header, std::string output_name) 
 {
 	std::ofstream file(output_name, std::ios::app);
 	double count = 0;
@@ -116,9 +170,9 @@ void GraphMatrix::testbench(int algorithm_option, int repeat_test, int optimal_s
 	for (int i = 0; i < repeat_test; i++) {
 		printf("Iteration: %d\n",i);
 
-		AntColony *solution= new AntColony(adjMatrix,v);
+		AntColony *solution= new AntColony(adjMatrix, this->v, method, alpha, beta, iterations);
 		StartCounter();
-		path_cost = solution->Algorithm();
+		path_cost = solution->Algorithm(optimal_solution);
 		count += GetCounter();
 
 		if(path_cost == 0) {
@@ -126,7 +180,8 @@ void GraphMatrix::testbench(int algorithm_option, int repeat_test, int optimal_s
 			return;
 		}
 
-		file << count << ";" << path_cost << "\n";
+		file << count << ";" << path_cost << ";\n";
+		printf("Result: %i\n", path_cost);
 		count = 0;
 		delete solution;
 	}
@@ -134,4 +189,37 @@ void GraphMatrix::testbench(int algorithm_option, int repeat_test, int optimal_s
 	delete path;
 
 	file.close();
+}
+
+//Node::Node(int index, int x, int y)
+//{
+//	this->index = index;
+//	this->x = x;
+//	this->y = y;
+//}
+
+void Node::setup_node(int index, int x, int y)
+{
+	this->index = index;
+	this->x = x;
+	this->y = y;
+}
+
+int Node::getX()
+{
+	return this->x;
+}
+
+int Node::getY()
+{
+	return this->y;
+}
+
+int length_between_nodes(Node a, Node b) {
+	int length;
+	if(a.index == b.index) {
+		return -1;
+	}
+	length = pow(abs(a.getX() - b.getX()),2) + pow(abs(a.getY() - b.getY()),2);
+	return length;
 }

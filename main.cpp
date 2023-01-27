@@ -10,6 +10,10 @@ constexpr auto config = "config.ini";
 void configInit(GraphMatrix* gm) {
 	printf("File processing...\n");
 	int repeat_test, optimal_solution;
+	int method;
+	double alpha;
+	double beta;
+	int iterations;
 	string path;
 	ifstream file;
 	string file_name;
@@ -39,6 +43,10 @@ void configInit(GraphMatrix* gm) {
 
 		while ((file >> file_name) && file_name.substr(file_name.find_last_of(".")) != ".csv") {
 			file >> repeat_test;
+			file >> method;
+			file >> alpha;
+			file >> beta;
+			file >> iterations;
 			file >> optimal_solution;
 			//getline(file, path);
 			if(!(gm->readFromFile(file_name))){
@@ -51,7 +59,7 @@ void configInit(GraphMatrix* gm) {
 
 			//gm->testbench(1, fileName + " " + to_string(loops) + " " + to_string(optimal) + path + ";", loops, path_method, temperature, temperature_final, alpha, epoch, neighbourhood_type, cooling_method, optimal, outputName);
 			
-			gm->testbench(1, repeat_test, optimal_solution, file_name, output_name);
+			gm->testbench(repeat_test, method, alpha, beta, iterations, optimal_solution, file_name, output_name);
 		}
 		file.close();
 	}

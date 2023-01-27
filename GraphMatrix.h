@@ -17,5 +17,5 @@ public:
 	void removeEdge(int i, int j);
 	void displayMatrix();
     void tspBruteForce();
-    void testbench(int algorithm_option, int repeat_test, int optimal_solution, std::string header, std::string output_name);
+    void testbench(int repeat_test, int method, double alpha, double beta, int iterations, int optimal_solution, std::string header, std::string output_name);
 };
